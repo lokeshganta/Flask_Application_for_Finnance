@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultato</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        h1 {
+            margin-bottom: 0;
+            /* Rimuovi il margine inferiore per l'elemento h1 */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            /* Consenti agli elementi di passare alla riga successiva */
+            justify-content: center;
+            /* Centra il contenuto orizzontalmente */
+        }
+
+        .chart-table-container {
+            flex-basis: 100%;
+            /* Il contenitore del grafico e della tabella occupa tutta la larghezza */
+            display: flex;
+            justify-content: space-between;
+            /* Spaziatura tra grafico e tabella */
+            margin-bottom: 0px;
+        }
+
+        .chart-container {
+            flex-grow: 1;
+            /* Il contenitore del grafico occupa tutto lo spazio extra */
+            box-sizing: border-box;
+            /* Assicura che il padding sia incluso nel calcolo della larghezza */
+            
+        }
+
+        .table-container {
+            flex-basis: 48%;
+            /* Il contenitore della tabella occupa quasi la metà della larghezza disponibile */
+            box-sizing: border-box;
+            /* Assicura che il padding sia incluso nel calcolo della larghezza */
+        }
+
+        .analysis-container {
+            flex-basis: 100%;
+            /* Il contenitore dei risultati dell'analisi occupa tutta la larghezza */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .analysis-container h2 {
+            margin-top: 0;
+            text-align: center;
+            /* Centra l'intestazione */
+        }
+
+        .analysis-result {
+            margin-bottom: 0px;
+            text-align: center;
+            /* Centra il contenuto */
+        }
+
+        .analysis-result p {
+            margin: 5px 0;
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: center;
+            /* Centra gli elementi orizzontalmente */
+            margin-bottom: 20px;
+        }
+
+        .box {
+            background-color: #f9f9f9;
+            /* Colore di sfondo chiaro */
+            border: 1px solid #dddddd;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 10px;
+            /* Angoli arrotondati */
+            flex: 1;
+            /* Distribuisci lo spazio rimanente in modo uniforme */
+            min-width: 200px;
+            /* Larghezza minima per le caselle */
+        }
+
+        /* CSS aggiuntivo per formattare il contenuto all'interno delle caselle */
+        .box span {
+            font-weight: normal;
+            /* Reset del grassetto */
+        }
+
+        .box .result {
+            font-weight: bold;
+            /* Incremento del grassetto per i risultati */
+        }
+
+        .box p {
+            margin: 5px 0;
+        }
+        .highlight-container {
+    margin-top: 20px;
+}
+
+.highlight-container h2 {
+    text-align: center;
+}
+
+.highlight-block {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.highlight-block p {
+    margin: 0;
+}
+
+.highlight-block p span {
+    font-weight: bold;
+}
+
+.highlight-block p .result {
+    margin-left: 5px;
+}
+/* CSS for Table and Blocks Layout */
+.table-blocks-container {
+    display: flex;
+    /* Use flexbox to arrange elements horizontally */
+    align-items: flex-start;
+    /* Align items at the start of the flex container */
+    justify-content: space-between;
+    /* Add space between the table and blocks */
+}
+
+.table-container,
+.blocks-container {
+    flex-basis: 48%;
+    /* Set width for each container */
+}
+
+.table-container h2,
+.blocks-container h2 {
+    margin-top: 0;
+    /* Reset margin */
+}
+
+.box-container {
+    display: flex;
+    flex-direction: column;
+    /* Arrange blocks vertically */
+    gap: 10px;
+    /* Add spacing between blocks */
+}
+
+.box {
+    flex-grow: 1;
+    /* Allow blocks to occupy available vertical space */
+}
+.analysis-recommendations-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.analysis-container {
+    background-color: #75d0e4; /* Set background color for Analysis section */
+    padding: 20px;
+}
+
+.recommendations-container {
+    background-color: #adb470; /* Set background color for Recommendations section */
+    padding: 20px;
+}
+/* Add or update CSS styles for better alignment and bullet points */
+
+.analysis-recommendations-container {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+}
+
+.analysis-container,
+.recommendations-container {
+    flex-basis: 48%;
+}
+
+.analysis-container ul,
+.recommendations-container ul {
+    margin-left: 20px; /* Add left margin for bullet points */
+    padding-left: 0; /* Remove default padding */
+    
+}
+
+.analysis-container li,
+.recommendations-container li {
+    list-style-position: inside; /* Place bullet points inside the container */
+}
+
+.analysis-container ul {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+.analysis-container li {
+    margin-left: 20px; /* Add left margin for indentation */
+    width: 250px; /* Fixed width for list items */
+    display: inline-block; /* Display items inline */
+    vertical-align: top; /* Align items to the top */
+}
+
+
+
+.recommendation {
+    margin-bottom: 20px; /* Add margin between recommendations */
+}
+
+/* Adjust spacing and alignment for better layout */
+.analysis-recommendations-container h2 {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+
+.recommendation ul {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-top: 0;
+    align-items: flex-start; /* Align list items at the start */
+}
+
+.recommendation h3 {
+    margin-top: 0;
+}
+
+.recommendation li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+    text-indent: 0; /* Remove default indentation */
+}
+
+
+
+    </style>
+</head>
+
+<body>
+    <h1>Rapporto di Analisi delle Spese</h1><br>
+<hr>
+    <div class="container">
+        <div class="chart-table-container">
+            <div class="chart-container">
+                <div>
+                    <img src="data:image/png;base64,{{ plot }}" alt="Grafico">
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div>
+                    <img src="data:image/png;base64,{{ pie_chart_data }}" alt="Pie Chart" style="max-height: 600px; max-width: 680px;">
+                </div>
+            </div>
+        </div>
+
+
+<div class="table-blocks-container">
+        <div class="table-container">
+            <h2>Tabella</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categorie</th>
+                        {% for column in money_map_categories %}
+                        <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for category, data in category_diff.items() %}
+                        {% if not loop.first %}
+                            <tr>
+                                <td>{{ category }}</td>
+                                {% for value in data %}
+                                    <td>{{ data[value] }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Highlights from Table -->
+<div class="blocks-container">
+    <h2>Punti salienti dalla tabella</h2>
+    <div class="box-container">
+        <div class="box" style="background-color: #dd55a9;">
+            <p>Spese Totali Non Essenziali:<br><span>€</span> <span class="result">{{ total_non_essential_spending }}</span></p>
+        </div>
+        <div class="box" style="background-color: #54e49c;">
+            <p>Spese Totali:<br><span>€</span> <span class="result">{{ total_spending }}</span></p>
+        </div>
+        <div class="box" style="background-color: #75c8dd;">
+            <p>Percentuale di Spese Non Essenziali:<br><span class="result">{{ percentage_non_essential }}%</span></p>
+        </div>
+        <div class="box" style="background-color: #b9eb45;">
+            <p>Categorie più spese non essenziali:<br><span class="result">{{ most_spending_category_overall }}</span></p>
+        </div>
+        <div class="box" style="background-color: #1bdfdb;">
+            <p>L'aumento più elevato delle spese non essenziali si è verificato a partire da <b>Da giugno a luglio 2023</b>, <br>con un aumento di<b>€1,965</b>.</p>
+        </div>
+        <div class="box" style="background-color: #eb9845;">
+            <br>La categoria con la più alta fluttuazione delle spese è <b>Altre spese</b>,</br> con un incremento massimo di <b>€2,363 nel mese di luglio 2023</b> and </br>una diminuzione massima di <b>€2,303 in agosto 2023</b></p>
+        </div>
+    </div>
+</div>
+</div>
+
+    <div class="analysis-recommendations-container">
+        <div class="analysis-container">
+            <h2>Risultati dell'Analisi</h2>
+        <p><b>Categoria più spesa non essenziale per ogni mese:</b></p>
+        <ul>
+            {% for category, month_tuple in most_spending_category_each_month.items() %}
+                {% if month_tuple %}
+                    {% set year = month_tuple[0] %}
+                    {% set month_num = month_tuple[1] %}
+                    {% set month_names = {
+                        1: "Gennaio", 2: "Febbraio", 3: "Marzo", 4: "Aprile",
+                        5: "Maggio", 6: "Giugno", 7: "Luglio", 8: "Agosto",
+                        9: "Settembre", 10: "Ottobre", 11: "Novembre", 12: "Dicembre"
+                    } %}
+                    <li>{{ category }}: {{ month_names[month_num] }} {{ year }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+            <p><b>Spese totali per ogni mese per la categoria più spesa non essenziale:</b></p>
+            <ul>
+                {% for category, spending in total_spending_each_month.items() %}
+                <li>{{ category }}: €{{ spending }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+    <div class="recommendations-container">
+        <h2>Raccomandazioni</h2>
+        <div class="recommendation">
+            <h3>Riduzione delle spese non essenziali:</h3>
+            <ul>
+                <li>Analizza attentamente le tue spese non essenziali. Identificare le aree in cui è possibile ridurre o eliminare le spese non necessarie.</li>
+                <li>Stabilisci un budget per le spese non essenziali. Questo ti aiuterà a tenere sotto controllo le tue uscite.</li>
+                <li>Cerca alternative più economiche. Ad esempio, potresti cucinare a casa invece di mangiare fuori o approfittare di attività ricreative gratuite o a basso costo.</li>
+            </ul>
+        </div>
+        <div class="recommendation">
+            <h3>Riduzione del debito:</h3>
+            <ul>
+                <li>Se hai un mutuo o un altro finanziamento, considera il rifinanziamento a un tasso di interesse più basso.</li>
+                <li>Valuta la possibilità di consolidare i tuoi debiti in un unico prestito con un tasso di interesse più basso.</li>
+                <li>Aumenta i pagamenti per il rimborso del debito.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+</body>
+
+</html>

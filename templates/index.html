@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carica file Excel</title>
+    <style>
+        /* Reset dei margini e del padding predefiniti */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Stili di base per un look pulito e moderno */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Stile del modulo */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .file-upload {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #333;
+            background-color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload label:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Stile dei pulsanti con effetto hover e stato attivo */
+        .upload-button {
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #2e8de5;
+            /* Blu primario */
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #247be5;
+            /* Blu più scuro al passaggio del mouse */
+        }
+
+        .upload-button:active {
+            background-color: #1a69e2;
+            /* Blu ancora più scuro al clic */
+        }
+
+        /* Stili personalizzati per il feedback sulla selezione dei file (opzionale) */
+        .file-upload input[type="file"]:focus+label,
+        .file-upload input[type="file"]:valid+label {
+            background-color: #d0ffd0;
+            /* Verde chiaro per il file selezionato */
+            border-color: #90ee90;
+            /* Bordo verde per il file selezionato */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Analisi Finale Personale</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="file-upload">
+            <input type="file" name="file" id="file" accept=".xls,.xlsx" onchange="displayFileName(this)">
+            <label for="file" id="file-label">Scegli File</label>
+        </div>
+        <button class="upload-button" type="submit">Carica</button>
+    </form>
+
+    <script>
+        function displayFileName(input) {
+            const fileLabel = document.getElementById('file-label');
+            const fileName = input.files[0].name;
+            fileLabel.innerHTML = fileName;
+            fileLabel.style.color = '#4caf50'; // Cambia colore per indicare il file scelto
+            // Se lo desideri, puoi anche aggiungere un segno destro qui
+        }
+    </script>
+</body>
+
+</html>
